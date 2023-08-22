@@ -1,11 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
-const Todo = ({ todoData }) => {
+const Todo = ({ todo }) => {
+  const dispatch = useDispatch();
   return (
     <div>
       <input type="checkbox" />
-      {todoData}
-      <button>Delete</button>
+      {todo.text}
+      <button
+        onClick={() =>
+          dispatch({ type: "DELETE_TODO", payload: { todo: todo } })
+        }
+      >
+        Delete
+      </button>
       <button>Edit</button>
     </div>
   );

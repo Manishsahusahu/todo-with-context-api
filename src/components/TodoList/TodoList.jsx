@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import Todo from "../Todo/Todo";
-import TodoContext from "../../context/TodoContext";
+import { useSelector } from "react-redux";
 
 const TodoList = () => {
-  const { list } = useContext(TodoContext);
+  const list = useSelector((state) => state.todo);
   return (
     <div>
       {list.length
         ? list.map((item) => {
-            return <Todo key={item.id} todoData={item.text} />;
+            return <Todo key={item.id} todo={item} />;
           })
         : "No item to show"}
     </div>
