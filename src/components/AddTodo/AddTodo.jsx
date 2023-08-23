@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
+import { addTodo } from "../../slices/todoSlice";
 
 const AddTodo = () => {
   const [inputText, setInputText] = useState("");
@@ -13,11 +14,7 @@ const AddTodo = () => {
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <button
-        onClick={() =>
-          dispatch({ type: "ADD_TODO", payload: { todoText: inputText } })
-        }
-      >
+      <button onClick={() => dispatch(addTodo({ todoText: inputText }))}>
         Add
       </button>
     </div>

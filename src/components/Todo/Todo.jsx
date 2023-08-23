@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { deleteTodo, editTodo } from "../../slices/todoSlice";
 
 const Todo = ({ todo }) => {
-  const dispatch = useDispatch();
+  const [editEnable, setEditEnable] = useState(false);
+  const [editText, setEditText] = useState(todo.text);
+  const dispatch= useDispatch()
+
+  const handleEdit = () => {
+    if (editEnable) {
+      dispatch(editTodo({todoId: todo.id, todoText:editText}))
+    }
+    setEditEnable(!editEnable);
+  };
+  const handleChange = (e) => {
+    setEditText(e.target.value);
+  };
+
   return (
     <div>
       <input type="checkbox" />
-      {todo.text}
-      <button
-        onClick={() =>
-          dispatch({ type: "DELETE_TODO", payload: { todo: todo } })
-        }
-      >
+      {!editEnable ? (
+        todo.text
+      ) : (
+        <input type="text" value={editText} onChange={handleChange} />
+      )}
+      <button onClick={() => dispatch(deleteTodo({ todoId: todo.id }))}>
         Delete
       </button>
-      <button>Edit</button>
+      <button onClick={handleEdit}>{editEnable ? "Save" : "Edit"}</button>
     </div>
   );
 };
